@@ -12,6 +12,7 @@ class Item {
   }
 
   updateDaily(){
+    this.sellIn --
     switch(this.name){
       case 'Sulfuras, Hand of Ragnaros':
         this.updateSulfuras()
@@ -28,12 +29,12 @@ class Item {
   }
 
   updateSulfuras(){
+    this.sellIn ++
     return this
   }
 
   updateAgedBrie(){
     this.updateQualityValue(1)
-    this.sellIn --
     if (this.sellIn < 0) {
       this.updateQualityValue(1)
     }  
@@ -42,13 +43,8 @@ class Item {
 
   updateBackstage(){
     this.updateQualityValue(1)
-    if (this.sellIn < 11) {
-      this.updateQualityValue(1)
-    }
-    if (this.sellIn < 6) {
-      this.updateQualityValue(1)
-    }
-    this.sellIn --
+    if (this.sellIn < 10) this.updateQualityValue(1)
+    if (this.sellIn < 5) this.updateQualityValue(1)
     if (this.sellIn < 0) {
       this.updateQualityValue(-this.quality)
     }
@@ -57,7 +53,6 @@ class Item {
 
   updateNormal(){
     this.updateQualityValue(-1)
-    this.sellIn --
     if (this.sellIn < 0) {
       this.updateQualityValue(-1)
     }
@@ -72,9 +67,7 @@ class Shop {
   }
 
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      this.items[i].updateDaily()
-    }
+    this.items.forEach(item=>item.updateDaily())
     return this.items;
   }
 }
