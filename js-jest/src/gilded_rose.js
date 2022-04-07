@@ -7,7 +7,7 @@ class Item {
     this.lowerLimit = 0
   }
 
-  updateQualityValue (value){
+  increaseQuality (value){
     if( this.quality < this.limit && this.quality > this.lowerLimit ) this.quality += value
   }
 
@@ -15,48 +15,40 @@ class Item {
     this.sellIn --
     switch(this.name){
       case 'Sulfuras, Hand of Ragnaros':
-        this.updateSulfuras()
+        this.sellIn ++
         break
       case 'Aged Brie':
-        this.updateAgedBrie()
+        this.updateAgedBrieQuality()
         break
       case 'Backstage passes to a TAFKAL80ETC concert':
-        this.updateBackstage()
+        this.updateBackstageQuality()
         break
       default:
-        this.updateNormal()
+        this.updateNormalQuality()
     }
   }
-
-  updateSulfuras(){
-    this.sellIn ++
-    return this
-  }
-
-  updateAgedBrie(){
-    this.updateQualityValue(1)
+  
+  updateAgedBrieQuality(){
+    this.increaseQuality(1)
     if (this.sellIn < 0) {
-      this.updateQualityValue(1)
+      this.increaseQuality(1)
     }  
-    return this
   }
 
-  updateBackstage(){
-    this.updateQualityValue(1)
-    if (this.sellIn < 10) this.updateQualityValue(1)
-    if (this.sellIn < 5) this.updateQualityValue(1)
+  updateBackstageQuality(){
+    this.increaseQuality(1)
+    if (this.sellIn < 10) this.increaseQuality(1)
+    if (this.sellIn < 5) this.increaseQuality(1)
     if (this.sellIn < 0) {
-      this.updateQualityValue(-this.quality)
+      this.increaseQuality(-this.quality)
     }
-    return this
   }
 
-  updateNormal(){
-    this.updateQualityValue(-1)
+  updateNormalQuality(){
+    this.increaseQuality(-1)
     if (this.sellIn < 0) {
-      this.updateQualityValue(-1)
+      this.increaseQuality(-1)
     }
-    return this
   }
 }
 
